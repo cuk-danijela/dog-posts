@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col, Card, Image, Badge } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { BsArrowLeft } from "react-icons/bs";
-import { TfiAlarmClock } from 'react-icons/tfi';
-import { AiOutlineLike } from "react-icons/ai";
-import {someData} from "../data"
+import { apiUrl, apiKey } from '../util/api';
 
 
 
@@ -12,12 +10,41 @@ export default function Post() {
 
     const navigate = useNavigate()
 
-    const getFormattedDate = (dateStr) => {
-        const date = new Date(dateStr);
-        return date.toLocaleString();
-    }
+    const [post, setPost] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    console.log(someData)
+    const { postId } = useParams();
+
+    // const getFormattedDate = (dateStr) => {
+    //     const date = new Date(dateStr);
+    //     return date.toLocaleString();
+    // }
+
+    useEffect(() => {
+        const getPostById = async () => {
+            try {
+                const res = await fetch(`${apiUrl}/post/${postId}`, {
+                    method: "GET",
+                    withCredentials: true,
+                    headers: {
+                        'app-id': apiKey,
+                        'Accept': 'application/json',
+                        'Content-Type': 'multipart/form-data'
+                    },
+                });
+                if (!res.ok) throw new Error("Could not found!");
+                const data = await res.json();
+                setPost(data);
+                setIsLoading(false);
+            } catch (error) {
+                setIsLoading(false);
+                setError(error.message);
+            }
+        };
+
+        getPostById();
+    }, [postId]);
 
     return (
         <Container>
@@ -26,20 +53,12 @@ export default function Post() {
                     <Button variant="primary" className="btn-block w-100 mt-5 mb-5" onClick={() => navigate("/")}>Go back <BsArrowLeft /></Button>
                 </Col>
             </Row>
-
+            {isLoading && !error && <h4>Loading........</h4>}
+            {error && !isLoading && { error }}
             <Row>
-                {
-                    someData && someData.map (data => {
-                        return(
-                            <p key={data.id}>{data}</p>
-                        )
-                    }
-
-                    )
-                }
-                
+                {post?.map((post, index) => (<p key={index}>{post}</p>))}
             </Row>
         </Container>
     )
-
 }
+ 

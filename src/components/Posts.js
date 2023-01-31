@@ -63,8 +63,8 @@ export default function Posts() {
             <Row>
                 {posts
                     .sort((a, b) => (a.publishDate > b.publishDate ? 1 : -1))
-                    .map((post) => (
-                        <Col key={post.id}>
+                    .map((post, id) => (
+                        <Col key={id}>
                             <Card className="card-div">
                                 <Card.Header className="text-start">
                                     <Image src={post.owner.picture} roundedCircle style={{ width: '20%' }} /> {post.owner.firstName} {post.owner.lastName}
@@ -78,7 +78,7 @@ export default function Posts() {
                                         <div className="card-text">{post.text}</div>
                                         {post.tags.map((tag, index) => (<div key={index} className="card-tags">{tag}</div>))}
                                     </Card.Text>
-                                    <Link to={`/post/${post.id}`}>
+                                    <Link to={`/post/${id}`}>
                                         <Button variant="primary" className="card-btn">View more details <BsArrowRight /></Button>
                                     </Link>
                                 </Card.Body>

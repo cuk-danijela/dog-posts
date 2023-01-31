@@ -17,7 +17,6 @@ function App() {
         <Route path='new' element={<NewPost />} />
         <Route path=':postId' element={<Post />}>
         <Route path='posts' element={<Posts />}>
-        
             {/* <Route index element={<PostIndex />} /> */}
             <Route path='comments' element={<Comments />} />
           </Route>

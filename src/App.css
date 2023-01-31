@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+body{
+    padding:0px;
+    margin: 0px;
+    background-color: #1E1E24;
+    /* background-image: url('./assets/wallpaper.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.jumbotron{
+    height: 165px;
+    background-position: bottom center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1{
+    color:#ffffff;
+    font-family: 'Ruda', sans-serif;
+    font-size: 70px;
+    font-weight: 900;
+    margin: 0px;
+    padding-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card-div{
+    /* border: 1px solid #ffffff;
+    margin: 60px auto;
+    padding: 10px 0px 0px 0px;
+    width: 90%; */
+    margin-bottom: 2rem;
+}
+.card-badge{
+        text-align: left;
+    margin: 10px;
+}
+.card-img{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 20rem;
+    width: 100%;
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 20%);
+}
+.card-body{
+    display: inline-block;
+    width: 18rem;
+    height: 18rem;
+}
+.card-text{
+    display: inline-block;
+    height: 4rem;
+    text-align: center;
+    margin: 10px 0 10px 0;
+}
+.card-tags{
+    display: inline;
+    margin: 5px;
+    color: rgb(17, 21, 23);
+    padding: 2px 5px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 25%) 0px 2px 3px;
+    border-radius: 4px;
+    font-weight: 300;
+}
+.card-btn{
+    margin-top: 30px;
+    width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path='new' element={<NewPost />} />
         <Route path="/" element={<Posts />} />
-        <Route path="/country/:countryName" element={<Post />} />
+        <Route path="/post/:postId" element={<Post />} />
         {/* <Route index element={<PostIndex />} /> */}
         <Route path='comments' element={<Comments />} />
         <Route path="*" element={<NoPage />} />

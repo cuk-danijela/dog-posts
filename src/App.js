@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Home from './components/Home'
 import Posts from './components/Posts'
 import Post from './components/Post'
 import NewPost from './components/NewPost'
@@ -12,15 +11,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="*" element={<NoPage />} />
-        <Route path='/' element={<Home />} />
         <Route path='new' element={<NewPost />} />
-        <Route path=':postId' element={<Post />}>
-        <Route path='posts' element={<Posts />}>
-            {/* <Route index element={<PostIndex />} /> */}
-            <Route path='comments' element={<Comments />} />
-          </Route>
-        </Route>
+        <Route path="/" element={<Posts />} />
+        <Route path="/country/:countryName" element={<Post />} />
+        {/* <Route index element={<PostIndex />} /> */}
+        <Route path='comments' element={<Comments />} />
+        <Route path="*" element={<NoPage />} />
       </Routes>
     </Router>
   );

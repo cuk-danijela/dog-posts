@@ -1,4 +1,4 @@
-export const someData = [
+const someData = [
     {
         "data": [
             {
@@ -388,3 +388,4 @@ export const someData = [
     }
 ]
 
+export default someData;

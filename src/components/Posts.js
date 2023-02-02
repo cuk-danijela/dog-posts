@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Card, Container, Row, Col, Button, Badge, Spinner, Image } from 'react-bootstrap';
 import { apiUrl, apiKey } from '../util/api';
 import { TfiAlarmClock } from 'react-icons/tfi';
@@ -34,7 +34,7 @@ export default function Posts() {
             const data = await res.json();
             setPosts(data.data);
             setIsLoading(false);
-            console.log(data);
+            // console.log(data);
         }
         catch (error) {
             setIsLoading(false);
@@ -45,7 +45,7 @@ export default function Posts() {
 
     useEffect(() => {
         getAllPosts();
-    }, []);
+    },);
 
     return (
         <Container>
@@ -73,14 +73,10 @@ export default function Posts() {
                                     <Badge bg="secondary"><AiOutlineLike />{post.likes}</Badge></h3></div>
                                 <Card.Body>
                                     <Card.Title>Card Title</Card.Title>
-                                    <Card.Text>
                                         <TfiAlarmClock /><span>{getFormattedDate(post.publishDate)}</span><br />
                                         <div className="card-text">{post.text}</div>
-                                        {post.tags.map((tag, index) => (<div key={index} className="card-tags">{tag}</div>))}
-                                    </Card.Text>
-                                    <Link to={`/post/${id}`}>
-                                        <Button variant="primary" className="card-btn">View more details <BsArrowRight /></Button>
-                                    </Link>
+                                        {post.tags.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}
+                                        <Button variant="primary" className="card-btn" onClick={() => navigate(`/post/${id}`)}>View more details <BsArrowRight /></Button>
                                 </Card.Body>
                             </Card>
                         </Col>

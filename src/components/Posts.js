@@ -76,7 +76,7 @@ export default function Posts() {
                                         <TfiAlarmClock /><span>{getFormattedDate(post.publishDate)}</span><br />
                                         <div className="card-text">{post.text}</div>
                                         {post.tags.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}
-                                        <Button variant="primary" className="card-btn" onClick={() => navigate(`/post/${id}`)}>View more details <BsArrowRight /></Button>
+                                        <Button variant="primary" className="card-btn" onClick={() => navigate(`/post/${post.id}`)}>View more details <BsArrowRight /></Button>
                                 </Card.Body>
                             </Card>
                         </Col>

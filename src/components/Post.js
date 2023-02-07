@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Row, Col, Spinner, Card, Image, Badge } from 'react-bootstrap';
+import { Button, Container, Row, Col, Spinner, Card, ListGroup, Image, Badge } from 'react-bootstrap';
 import { useNavigate, useParams, Link } from "react-router-dom"
 import { BsArrowLeft } from "react-icons/bs";
+import { TfiAlarmClock } from 'react-icons/tfi';
+import { AiOutlineLike, AiOutlineInstagram } from "react-icons/ai";
 import { apiUrl, apiKey } from '../util/api';
 
 
@@ -15,10 +17,10 @@ export default function Post() {
 
     const { postId } = useParams();
 
-    // const getFormattedDate = (dateStr) => {
-    //     const date = new Date(dateStr);
-    //     return date.toLocaleString();
-    // }
+    const getFormattedDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toLocaleString();
+    }
 
     useEffect(() => {
         const getCountryByName = async () => {
@@ -46,8 +48,9 @@ export default function Post() {
         getCountryByName();
     }, [postId]);
 
- 
+
     return (
+
         <Container>
             <Row className='d-flex justify-content-start'>
                 <Col className="col-2">
@@ -57,11 +60,27 @@ export default function Post() {
             {isLoading && !Error && <h4><Spinner animation="border" variant="primary" /></h4>}
             {!Error && isLoading && <h4>{Error}</h4>}
             <Row>
-                
                 <Col>
-                  <h1>Hey</h1>
+                    <Card className="flex-row">
+                        <div className="cardDiv">
+                            <Image variant="top" src={post.image} style={{ width: "100%" }} />
+                        </div>
+                        <div className="cardDiv">
+                            {/* <div>
+                                <Image src={post.owner.picture} roundedCircle style={{ width: '20%' }} />
+                                <p>{post.owner.title} {post.owner.firstName} {post.owner.lastName}</p>
+                            </div> */}
+
+                            <TfiAlarmClock />{getFormattedDate(post.publishDate)}
+                            <hr />
+                            <AiOutlineLike /> {post.likes}  <Card.Link href={post.link} style={post.link == null ? { display: 'none' } : { display: 'inline' }} ><AiOutlineInstagram /> Instagram</Card.Link>
+                            <hr />
+                            <p>{post.text}</p>
+                            <hr />
+                            <div>{post.tags?.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}</div>
+                        </div>
+                    </Card>
                 </Col>
-               
             </Row>
         </Container>
     )

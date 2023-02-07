@@ -71,3 +71,8 @@ h1{
     width: 100%;
 }
 
+.cardDiv{
+    width: 50%;
+    padding: 20px;
+    display: inline-block;
+}

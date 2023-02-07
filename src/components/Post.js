@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col, Spinner, Card, ListGroup, Image, Badge } from 'react-bootstrap';
-import { useNavigate, useParams, Link } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { BsArrowLeft } from "react-icons/bs";
 import { TfiAlarmClock } from 'react-icons/tfi';
 import { AiOutlineLike, AiOutlineInstagram } from "react-icons/ai";
 import { apiUrl, apiKey } from '../util/api';
-
+import Comments from "./Comments";
 
 export default function Post() {
 
@@ -79,6 +79,7 @@ export default function Post() {
                             <hr />
                             <div>{post.tags?.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}</div>
                         </div>
+                        <Comments/>
                     </Card>
                 </Col>
             </Row>

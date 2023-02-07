@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { Alert, Image } from 'react-bootstrap';
+import { TfiAlarmClock } from 'react-icons/tfi';
 import { apiUrl, apiKey } from '../util/api';
 
 
@@ -11,6 +13,11 @@ export default function Comments() {
     const [error, setError] = useState("");
 
     const { postId } = useParams();
+
+    const getFormattedDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toLocaleString();
+    }
 
     useEffect(() => {
         const getComments = async () => {
@@ -26,7 +33,7 @@ export default function Comments() {
                 });
                 if (!res.ok) throw new Error("Could not found!");
                 const data = await res.json();
-                setComment(data);
+                setComment(data.data);
                 setIsLoading(false);
                 console.log(data);
             } catch (error) {
@@ -40,10 +47,18 @@ export default function Comments() {
 
 
     return (
-        <div>
-
-            
-        </div>
+        <>
+            {comment?.map((comm, index) => (
+                <Alert variant="primary" className="mt-2" style={comm.total === 0 ? { display: 'none' } : { display: 'block' }}>
+                    <div key={index} >
+                        <Image src={comm.owner.picture} roundedCircle style={{ width: '10%' }} />
+                        <p className="d-inline"> {comm.owner.title} {comm.owner.firstName} {comm.owner.lastName}</p><br/>
+                        <span><TfiAlarmClock />{getFormattedDate(comm.publishDate)}</span>
+                        <p className="mb-0">{comm.message}</p>
+                    </div>
+                </Alert>
+            ))}
+        </>
 
     )
 }

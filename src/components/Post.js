@@ -77,9 +77,9 @@ export default function Post() {
                             <hr />
                             <p>{post.text}</p>
                             <hr />
-                            <div>{post.tags?.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}</div>
+                            <div className="mb-5">{post.tags?.map((tag, index) => (<span key={index} className="card-tags">{tag}</span>))}</div>
+                            <Comments />
                         </div>
-                        <Comments/>
                     </Card>
                 </Col>
             </Row>

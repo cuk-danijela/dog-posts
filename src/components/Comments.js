@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
-import { Alert, Image } from 'react-bootstrap';
+import { Alert, Image, Form, FloatingLabel, Button, Accordion } from 'react-bootstrap';
 import { TfiAlarmClock } from 'react-icons/tfi';
 import { apiUrl, apiKey } from '../util/api';
 
@@ -48,16 +48,50 @@ export default function Comments() {
 
     return (
         <>
-            {comment?.map((comm, index) => (
-                <Alert variant="primary" className="mt-2" style={comm.total === 0 ? { display: 'none' } : { display: 'block' }}>
-                    <div key={index} >
-                        <Image src={comm.owner.picture} roundedCircle style={{ width: '10%' }} />
-                        <p className="d-inline"> {comm.owner.title} {comm.owner.firstName} {comm.owner.lastName}</p><br/>
-                        <span><TfiAlarmClock />{getFormattedDate(comm.publishDate)}</span>
-                        <p className="mb-0">{comm.message}</p>
-                    </div>
-                </Alert>
-            ))}
+            <Alert variant="primary" className="mt-2" >
+                <Form>
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="User name"
+                        className="mb-3"
+                    >
+                        <Form.Control type="text" placeholder="Your name" />
+                    </FloatingLabel>
+
+                    <FloatingLabel controlId="floatingTextarea2" label="Comments">
+                        <Form.Control
+                            as="textarea"
+                            placeholder="Leave a comment here"
+                            style={{ height: '100px' }}
+                        />
+                    </FloatingLabel>
+
+                    <Button variant="primary" type="submit" className="card-btn">
+                        Send your comment 
+                    </Button>
+                </Form>
+
+                <Accordion defaultActiveKey="0" flush className="mt-4" style={comment.total === 0 ? { display: 'none' } : { display: 'block' }}>
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Header> Join the Discussion!</Accordion.Header>
+                        <Accordion.Body>
+                            {comment?.map((comm, index) => (
+                                <>
+                                    <div key={index}>
+                                        <Image src={comm.owner.picture} roundedCircle style={{ width: '10%' }} />
+                                        <p className="d-inline"> {comm.owner.title} {comm.owner.firstName} {comm.owner.lastName}</p><br />
+                                        <span><TfiAlarmClock />{getFormattedDate(comm.publishDate)}</span>
+                                        <p className="mb-0">{comm.message}</p>
+                                        <hr/>
+                                    </div>
+                                </>
+                            ))}
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            
+            
+            </Alert>
         </>
 
     )

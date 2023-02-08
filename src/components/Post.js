@@ -3,18 +3,14 @@ import { Button, Container, Row, Col, Spinner, Card, ListGroup, Image, Badge } f
 import { useNavigate, useParams } from "react-router-dom"
 import { BsArrowLeft } from "react-icons/bs";
 import { TfiAlarmClock } from 'react-icons/tfi';
-import { AiOutlineLike, AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineLike, AiOutlineInstagram, AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { apiUrl, apiKey } from '../util/api';
 import Comments from "./Comments";
 
 export default function Post() {
 
     const navigate = useNavigate()
-
     const [post, setPost] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-
     const { postId } = useParams();
 
     const getFormattedDate = (dateStr) => {
@@ -23,7 +19,7 @@ export default function Post() {
     }
 
     useEffect(() => {
-        const getCountryByName = async () => {
+        const getPostById = async () => {
             try {
                 const res = await fetch(`${apiUrl}/post/${postId}`, {
                     method: "GET",
@@ -37,15 +33,13 @@ export default function Post() {
                 if (!res.ok) throw new Error("Could not found!");
                 const data = await res.json();
                 setPost(data);
-                setIsLoading(false);
                 console.log(data);
             } catch (error) {
-                setIsLoading(false);
-                setError(error.message);
+                console.log(error.message);
             }
         };
 
-        getCountryByName();
+        getPostById();
     }, [postId]);
 
 
@@ -57,23 +51,26 @@ export default function Post() {
                     <Button variant="primary" className="btn-block w-100 mt-5 mb-5" onClick={() => navigate("/")}><BsArrowLeft /> Go back </Button>
                 </Col>
             </Row>
-            {isLoading && !Error && <h4><Spinner animation="border" variant="primary" /></h4>}
-            {!Error && isLoading && <h4>{Error}</h4>}
             <Row>
                 <Col>
-                    <Card className="flex-row">
+                    <Card className="flex-row mb-5">
                         <div className="cardDiv">
-                            <Image variant="top" src={post.image} style={{ width: "100%" }} />
+                            <Image variant="top" src={post.image} style={{ width: "100%" }} className="mb-2" />
+                            <Button variant="primary" style={{margin: "20px"}} onClick={() => navigate(`/post/${post.id}`)}>Edit post <AiFillEdit /></Button>
+                            <Button variant="primary" style={{margin: "20px"}} onClick={() => navigate(`/post/${post.id}`)}>Delete post <AiFillDelete /></Button>
                         </div>
-                        <div className="cardDiv">
-                            {/* <div>
-                                <Image src={post.owner.picture} roundedCircle style={{ width: '20%' }} />
-                                <p>{post.owner.title} {post.owner.firstName} {post.owner.lastName}</p>
-                            </div> */}
-
-                            <TfiAlarmClock />{getFormattedDate(post.publishDate)}
-                            <hr />
-                            <AiOutlineLike /> {post.likes}  <Card.Link href={post.link} style={post.link == null ? { display: 'none' } : { display: 'inline' }} ><AiOutlineInstagram /> Instagram</Card.Link>
+                        <div className="cardDiv d-inline">
+                            <div style={{ textAlign: 'left' }}>
+                                {/* <Image src={post.owner.picture} roundedCircle style={{ width: '10%', marginRight: '10px' }} /> */}
+                                <p className="d-inline position-absolute text-left">
+                                    {/* <AiOutlineUser /> {post.owner.title} {post.owner.firstName} {post.owner.lastName}<br /> */}
+                                    <TfiAlarmClock /> {getFormattedDate(post.publishDate)}
+                                </p>
+                            </div>
+                            <div className="d-flex justify-content-end ">
+                                <h5 style={{ textAlign: "left" }}><AiOutlineLike /> {post.likes}  <br />
+                                    <Card.Link href={post.link} style={post.link == null ? { display: 'none' } : { display: 'inline' }} ><AiOutlineInstagram /> Instagram</Card.Link></h5>
+                            </div>
                             <hr />
                             <p>{post.text}</p>
                             <hr />

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { Alert, Image, Form, FloatingLabel, Button, Accordion } from 'react-bootstrap';
 import { TfiAlarmClock } from 'react-icons/tfi';
+import { AiOutlineComment } from 'react-icons/ai';
+import { IoIosSend } from 'react-icons/io';
 import { apiUrl, apiKey } from '../util/api';
 
 
@@ -35,7 +37,7 @@ export default function Comments() {
                 const data = await res.json();
                 setComment(data.data);
                 setIsLoading(false);
-                console.log(data);
+                // console.log(data.data);
             } catch (error) {
                 setIsLoading(false);
                 setError(error.message);
@@ -67,30 +69,27 @@ export default function Comments() {
                     </FloatingLabel>
 
                     <Button variant="primary" type="submit" className="card-btn">
-                        Send your comment 
+                        Send your comment <IoIosSend />
                     </Button>
                 </Form>
 
-                <Accordion defaultActiveKey="0" flush className="mt-4" style={comment.total === 0 ? { display: 'none' } : { display: 'block' }}>
+                <Accordion flush className="mt-4" style={comment.length === 0 ? { display: 'none' } : { display: 'block' }}>
                     <Accordion.Item eventKey="0">
                         <Accordion.Header> Join the Discussion!</Accordion.Header>
                         <Accordion.Body>
                             {comment?.map((comm, index) => (
-                                <>
-                                    <div key={index}>
-                                        <Image src={comm.owner.picture} roundedCircle style={{ width: '10%' }} />
-                                        <p className="d-inline"> {comm.owner.title} {comm.owner.firstName} {comm.owner.lastName}</p><br />
-                                        <span><TfiAlarmClock />{getFormattedDate(comm.publishDate)}</span>
-                                        <p className="mb-0">{comm.message}</p>
-                                        <hr/>
-                                    </div>
-                                </>
+                                <div key={index} style={{textAlign: 'left'}}>
+                                    <Image src={comm.owner.picture} roundedCircle style={{ width: '10%', marginRight: '10px' }} />
+                                    <p className="d-inline position-absolute text-left"> {comm.owner.title} {comm.owner.firstName} {comm.owner.lastName}<br />
+                                        <span> {getFormattedDate(comm.publishDate)}</span>
+                                    </p>
+                                    <h4 className="mb-0 mt-3"><AiOutlineComment /> {comm.message}</h4>
+                                    <hr />
+                                </div>
                             ))}
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
-            
-            
             </Alert>
         </>
 
